@@ -1,65 +1,120 @@
-import Image from "next/image";
+import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
+import LabsShowcase from "@/components/LabsShowcase";
+import CTA from "@/components/CTA";
+import Reveal from "@/components/Reveal";
+import { SectionHeading } from "@/components/ui";
+import { activeLabs } from "@/lib/labs";
 
-export default function Home() {
+const capabilities = [
+  {
+    title: "Silicon, automated",
+    body: "A modern harness that makes chip design and tapeout reproducible — and AI agents that can drive it from RTL to GDSII.",
+    icon: "◈",
+  },
+  {
+    title: "Autonomy you can trust",
+    body: "Verification-first agents that show their work, respect guardrails, and keep humans in the loop where it matters.",
+    icon: "◇",
+  },
+  {
+    title: "Research that ships",
+    body: "New machine learning frameworks and efficient inference methods — the ideas that become the engine inside our products.",
+    icon: "❖",
+  },
+  {
+    title: "Open by default",
+    body: "The tooling and libraries we build internally, released as open source for the whole community to build on.",
+    icon: "✦",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Hero />
+
+      <Marquee />
+
+      {/* Capabilities */}
+      <section className="mx-auto mt-28 max-w-6xl px-6">
+        <Reveal>
+          <SectionHeading
+            eyebrow="What we do"
+            title={
+              <>
+                One studio.{" "}
+                <span className="text-gradient">Many frontiers.</span>
+              </>
+            }
+            intro="Winter Labs runs as a set of focused labs, each attacking a different hard problem — sharing tools, research, and a bias toward autonomy."
+          />
+        </Reveal>
+
+        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {capabilities.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.08}>
+              <div className="group h-full rounded-2xl border border-frost-300/12 bg-white/[0.02] p-6 transition-colors hover:border-frost-300/25">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-frost-300/20 bg-frost-500/10 text-lg text-frost-300">
+                  {c.icon}
+                </div>
+                <h3 className="mt-5 font-display text-lg font-semibold text-ice">
+                  {c.title}
+                </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-ice-muted">
+                  {c.body}
+                </p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Labs */}
+      <section className="mx-auto mt-32 max-w-6xl px-6">
+        <Reveal>
+          <SectionHeading
+            eyebrow="The Labs"
+            title={
+              <>
+                Explore each{" "}
+                <span className="text-gradient">frozen frontier.</span>
+              </>
+            }
+            intro="Every lab is a self-contained team with its own mandate and projects. Step inside to see what each one is building."
+          />
+        </Reveal>
+        <div className="mt-14">
+          <LabsShowcase />
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Numbers */}
+      <section className="mx-auto mt-32 max-w-6xl px-6">
+        <Reveal>
+          <div className="glass grid grid-cols-2 gap-8 rounded-3xl px-8 py-12 md:grid-cols-4">
+            {[
+              { v: `${activeLabs.length}`, l: "specialized labs" },
+              { v: "RTL→GDS", l: "end-to-end silicon focus" },
+              { v: "24/7", l: "agents on the job" },
+              { v: "Open", l: "source contributions" },
+            ].map((s) => (
+              <div key={s.l} className="text-center">
+                <div className="font-display text-3xl font-semibold text-gradient sm:text-4xl">
+                  {s.v}
+                </div>
+                <div className="mt-2 text-xs text-ice-dim sm:text-sm">
+                  {s.l}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      <div className="mt-32">
+        <CTA />
+      </div>
+    </>
   );
 }
