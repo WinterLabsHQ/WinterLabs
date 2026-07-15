@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { LogoMark } from "@/components/ui";
 
 const links = [
   { href: "/", label: "Home" },
@@ -28,18 +29,17 @@ export default function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 sm:px-4">
       <div
-        className={`mx-auto mt-3 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-3 transition-all duration-300 sm:px-6 ${
+        className={`mx-auto mt-3 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300 sm:px-6 ${
           scrolled ? "glass-strong shadow-lg shadow-frost-900/20" : ""
         }`}
-        style={{ marginInline: "max(1rem, calc((100vw - 72rem) / 2))" }}
       >
         <Link href="/" className="group flex items-center gap-2.5">
-          <span className="relative flex h-8 w-8 items-center justify-center">
-            <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-frost-400 to-aurora-cyan opacity-90 blur-[2px] transition group-hover:opacity-100" />
-            <span className="relative text-sm font-bold text-ink">❄</span>
-          </span>
+          <LogoMark
+            size={34}
+            className="rounded-lg ring-1 ring-frost-300/15 transition group-hover:ring-frost-300/35"
+          />
           <span className="font-display text-lg font-semibold tracking-tight text-ice">
             Winter<span className="text-frost-300">Labs</span>
           </span>
@@ -102,7 +102,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="glass-strong mx-4 mt-2 space-y-1 rounded-2xl p-3 md:hidden"
+            className="glass-strong mx-auto mt-2 max-w-6xl space-y-1 rounded-2xl p-3 md:hidden"
           >
             {links.map((l) => (
               <Link

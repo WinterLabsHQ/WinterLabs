@@ -4,7 +4,7 @@ import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
 import CTA from "@/components/CTA";
 import { SectionHeading, Eyebrow } from "@/components/ui";
-import { allProjects } from "@/lib/labs";
+import { allProjects, primaryLab } from "@/lib/labs";
 
 export const metadata: Metadata = {
   title: "Labs",
@@ -49,15 +49,18 @@ export default function LabsPage() {
           />
         </Reveal>
         <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {allProjects.map((p) => (
-            <Reveal key={`${p.lab.slug}-${p.name}`}>
-              <ProjectCard
-                project={p}
-                labName={p.lab.name}
-                accent={p.lab.accent}
-              />
-            </Reveal>
-          ))}
+          {allProjects.map((p) => {
+            const lab = primaryLab(p);
+            return (
+              <Reveal key={p.slug}>
+                <ProjectCard
+                  project={p}
+                  labName={lab?.name}
+                  accent={lab?.accent}
+                />
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 

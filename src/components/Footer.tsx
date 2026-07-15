@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { activeLabs } from "@/lib/labs";
 
 export default function Footer() {
@@ -7,15 +8,16 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-frost-400 to-aurora-cyan text-sm font-bold text-ink">
-                ❄
-              </span>
-              <span className="font-display text-lg font-semibold text-ice">
-                Winter<span className="text-frost-300">Labs</span>
-              </span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/winter-labs.jpeg"
+                alt="Winter Labs"
+                width={168}
+                height={158}
+                className="rounded-2xl ring-1 ring-frost-300/12"
+              />
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ice-muted">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ice-muted">
               A research and product studio building autonomous systems for
               silicon, capital, and the frontiers in between.
             </p>

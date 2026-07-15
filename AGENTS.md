@@ -81,16 +81,61 @@ src/
     motion.ts             # shared Framer Motion variants
 ```
 
+### Content model (`src/lib/labs.ts`)
+
+Two arrays drive the whole site:
+
+- `labs[]` — lab metadata (name, glyph, tagline, accent, focus areas, stat).
+- `projects[]` — real projects, each with a `labs: string[]` of lab slugs, so a
+  project can be **cross-listed** in multiple labs (e.g. Xenon is in Silicon, AI,
+  and Open Source). `projectsForLab(slug)` filters; `primaryLab()` gives the
+  accent-defining lab (first slug).
+
+Current labs: Silicon, AI, Research, Defense, Open Source (+ a "More Labs" coming-soon
+card). Projects are the studio's real GitHub repos (Xenon, AEGIS, Azmuth, Maisha,
+HridAI, NIRIKSHAK).
+
+**GitHub links are configurable:** `GITHUB_USER`, `SHOW_REPO_LINKS` (bool), and each
+project's `repo: "owner/name"` control the "View source" link. Set
+`SHOW_REPO_LINKS = false` to hide all repo links at once.
+
 ### Where to make common changes
 
 - **Add / edit a lab or project** → `src/lib/labs.ts`. Everything (home cards,
-  `/labs`, per-lab pages, footer, static params) is generated from this array.
-  New active labs automatically get a static page at `/labs/<slug>`.
+  `/labs`, per-lab pages, footer, static params) is generated from these arrays.
+  New active labs automatically get a static page at `/labs/<slug>`; give a project
+  a `repo` to surface its GitHub link.
+- **Brand logo** → `public/winter-labs.jpeg` (full lockup). The navbar shows a
+  cropped emblem via `<LogoMark>` in `components/ui.tsx`; the footer shows the full
+  image. `public/winter-emblem.png` is the pre-cropped hexagon emblem, etched onto
+  the chip die in `ChipVisual` (screen-blended). If you swap the logo, re-check the
+  crop coordinates in `LogoMark` and regenerate `winter-emblem.png`.
+- **Per-lab logos** → each `Lab.logo` points at a `/public/*-labs.png` hexagon
+  emblem (glowing motif on dark navy, theme-matched). Used in `LabCard`,
+  `LabEmblem` (lab-page hero), and the "continue exploring" cards.
+- **Deep project detail** → `Project.metrics`, `Project.highlights`, `Project.stack`,
+  and `Project.about` drive the rich `ProjectFeature` blocks on lab pages. The
+  compact `ProjectCard` (used on `/labs` index) reads the shorter fields.
 - **Change colors / fonts / theme tokens** → the `@theme` block in
   `src/app/globals.css`. Use the `frost-*`, `ice*`, and `aurora-*` tokens.
 - **Adjust animations** → `src/lib/motion.ts` (variants) and the `Reveal`
   component. Respect `prefers-reduced-motion` (already handled in CSS and
   `SnowBackground`).
+
+### Motion & visual components
+
+- `ScrollProgress` — top gradient scroll bar (`useScroll` + `useSpring`).
+- `ChipVisual` — the hero's animated silicon/hexagon emblem (rotating hex rings,
+  orbiting data nodes, drawing circuit traces, pulsing core die). Pure SVG + CSS.
+- `Pipeline` — scroll-triggered "spec → silicon" flow (the Xenon story).
+- `AnimatedNumber` — count-up on scroll into view; passes non-numeric strings
+  through unchanged.
+- `LabCard` — pointer-follow 3D tilt + spotlight (`useMotionValue`/`useTransform`).
+- `Marquee` — seamless full-bleed ticker (two-copy track, per-item trailing
+  margin so `-50%` loops with no seam). Keep it **outside** any `max-w` wrapper.
+- `.text-gradient-anim` (globals.css) — panning gradient headline text.
+
+Heavy loops all disable under `prefers-reduced-motion` where practical.
 
 ---
 
@@ -121,7 +166,9 @@ borders. Each lab carries its own `accent` hex used for per-lab glows.
 
 ## Content status
 
-Copy is polished **placeholder** content (believable but fictional projects, stats,
-and emails like `hello@winterlabs.example`). Replace with real details before
-launch. The contact form is a **front-end demo** — wire `ContactForm.tsx` to a real
-endpoint (route handler or form service) before going live.
+Project content is **real** — sourced from the studio's public GitHub repos
+(`github.com/Kiransekar`). Remaining placeholders to replace before launch:
+contact emails (`*@winterlabs.example`), the About-page timeline copy, and the
+`siteUrl` in `layout.tsx`. The contact form is a **front-end demo** — wire
+`ContactForm.tsx` to a real endpoint (route handler or form service) before going
+live. Private repos (SAVAI, upcheck-trace) are intentionally excluded.

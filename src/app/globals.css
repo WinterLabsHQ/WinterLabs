@@ -112,6 +112,28 @@ body {
   color: transparent;
 }
 
+/* Animated panning gradient text */
+.text-gradient-anim {
+  background: linear-gradient(
+    120deg,
+    var(--color-ice),
+    var(--color-frost-300),
+    var(--color-aurora-cyan),
+    var(--color-frost-300),
+    var(--color-ice)
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-pan 7s linear infinite;
+}
+@keyframes text-pan {
+  to {
+    background-position: 220% center;
+  }
+}
+
 /* Frost divider glow line */
 .hairline {
   height: 1px;
@@ -151,4 +173,5 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-float-slow { animation: none; }
+  .text-gradient-anim { animation: none; }
 }

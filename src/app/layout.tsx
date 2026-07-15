@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SnowBackground from "@/components/SnowBackground";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -76,6 +77,7 @@ export default function RootLayout({
         <div className="aurora-field" />
         <div className="grid-veil" />
         <SnowBackground />
+        <ScrollProgress />
         <Navbar />
         <main className="relative z-10 flex-1">{children}</main>
         <Footer />

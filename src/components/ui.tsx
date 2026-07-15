@@ -1,6 +1,34 @@
 import type { ReactNode } from "react";
 import type { Project } from "@/lib/labs";
 
+/**
+ * Cropped Winter Labs emblem (the hexagon + pine) taken from the full
+ * logo lockup in /public. Emblem occupies a ~178px square at (112,40)
+ * within the 403×379 source image.
+ */
+export function LogoMark({
+  size = 34,
+  className = "",
+}: {
+  size?: number;
+  className?: string;
+}) {
+  const scale = size / 178;
+  return (
+    <span
+      aria-hidden
+      className={`inline-block shrink-0 bg-no-repeat ${className}`}
+      style={{
+        width: size,
+        height: size,
+        backgroundImage: "url(/winter-labs.jpeg)",
+        backgroundSize: `${403 * scale}px ${379 * scale}px`,
+        backgroundPosition: `${-112 * scale}px ${-40 * scale}px`,
+      }}
+    />
+  );
+}
+
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-frost-300/20 bg-frost-500/5 px-3 py-1 font-mono text-xs uppercase tracking-[0.2em] text-frost-300">
